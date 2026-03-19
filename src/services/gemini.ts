@@ -1,5 +1,5 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import { interviewConfig } from '../server';
+import { getInterviewConfig } from '../config/interview';
 
 interface GeminiStreamResponse {
   text: string;
@@ -28,10 +28,10 @@ export class GeminiService {
     });
     this.conversationHistory = [];
 
-    // Get question and timer from global config
-    const question = interviewConfig?.question || 'Two Sum';
-    const timer = interviewConfig?.timer || 10;
-    const difficulty = interviewConfig?.difficulty || 'Easy';
+    const config = getInterviewConfig();
+    const question = config?.question || 'Two Sum';
+    const timer = config?.timer || 10;
+    const difficulty = config?.difficulty || 'Easy';
 
     this.systemPrompt = `You are a senior FAANG technical interviewer. This is a ${timer}-minute LIVE CODING ROUND.
 
